@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/obj
+/.vs
+/pharmacy-ui
+/Controllers
+/Models
+/Properties
+/appsettings.Development.json
+/appsettings.json
+/medicines.json
+/MedicineService.cs
+/pharmacy.csproj
+/pharmacy.csproj.user
+/pharmacy.http
+/pharmacy.slnx
+/Program.cs

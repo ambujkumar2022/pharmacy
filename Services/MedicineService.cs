@@ -1,7 +1,7 @@
 using pharmacy.Models;
 using System.Text.Json;
 
-namespace pharmacy
+namespace pharmacy.Services
 {
     public class MedicineService
     {

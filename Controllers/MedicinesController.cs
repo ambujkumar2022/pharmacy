@@ -21,6 +21,7 @@ namespace pharmacy.Controllers
         [HttpGet]
         public IActionResult Get(string? search)
         {
+            _logger.LogInformation("Fetching medicines with search term: {time}", DateTime.UtcNow);
             var medicines = _service.GetAll();
             if(!string.IsNullOrEmpty(search))
             {

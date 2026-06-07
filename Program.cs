@@ -1,6 +1,6 @@
 using pharmacy.Services;
-//using Serilog;
-//using Serilog.Sinks.Elasticsearch;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
 using System;
 using Microsoft.Extensions.Logging;
 
@@ -22,16 +22,44 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod());
 });
 
+//Add the Logging Sinks(Serilog) - Configure Serilog as provider for Microsoft.Extensions.Logging[Console, file, MSSqlServer, Elasticsearch]
+Log.Logger = new LoggerConfiguration()
+            // .WriteTo.Console()
+             .WriteTo.File(
+                       path: "Logs/log-.txt",
+                       rollingInterval: RollingInterval.Day,
+                       retainedFileCountLimit: 7,
+                       rollOnFileSizeLimit: true,
+                       outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+            /* .WriteTo.MSSqlServer(
+                connectionString: "Server=.;Database=LogsTEMP;User ID=sa;Password=SqlServer@0526;Encrypt=True;TrustServerCertificate=True;",
+                sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
+                {
+                    TableName = "Logs",
+                    AutoCreateSqlTable = true
+                })*/
+             .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("https://localhost:9200"))
+             {
+                 AutoRegisterTemplate = true,
+                 IndexFormat = $"logs-app-{DateTime.UtcNow:yyyy.MM.dd}",
+                 ModifyConnectionSettings = x => x
+                    .BasicAuthentication(
+                        "elastic",
+                        "M6COuqBBAk5YgV+_PhOp")
+                    .ServerCertificateValidationCallback(
+                        (o, cert, chain, errors) => true)
+             })
+             .CreateLogger();
+
 //Add Logging Providers
 builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
+builder.Logging.AddSerilog(Log.Logger);
 
-builder.Services.AddSingleton<ILogger>(sp =>
-{
-    var factory = sp.GetRequiredService<ILoggerFactory>();
-    return factory.CreateLogger("Default Logger");
-});
+//builder.Services.AddSingleton<ILogger>(sp =>
+//{
+//    var factory = sp.GetRequiredService<ILoggerFactory>();
+//    return factory.CreateLogger("Default Logger");
+//});
 
 var app = builder.Build();
 

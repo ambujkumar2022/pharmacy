@@ -1,0 +1,18 @@
+2026-06-07 09:01:17.858 +05:30 [INF] Now listening on: https://localhost:7142
+2026-06-07 09:01:17.980 +05:30 [INF] Now listening on: http://localhost:5085
+2026-06-07 09:01:18.346 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-07 09:01:18.351 +05:30 [INF] Hosting environment: Development
+2026-06-07 09:01:18.354 +05:30 [INF] Content root path: D:\Assessments_2026\PharmacyInventory\pharmacy
+2026-06-07 09:01:19.107 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7142/swagger/index.html - null null
+2026-06-07 09:01:19.497 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7142/swagger/index.html - 200 null text/html;charset=utf-8 407.7951ms
+2026-06-07 09:01:19.540 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7142/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-07 09:01:19.540 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7142/_vs/browserLink - null null
+2026-06-07 09:01:19.568 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7142/_framework/aspnetcore-browser-refresh.js - 200 14921 application/javascript; charset=utf-8 28.8214ms
+2026-06-07 09:01:19.664 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7142/_vs/browserLink - 200 null text/javascript; charset=UTF-8 124.9155ms
+2026-06-07 09:01:19.738 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7142/swagger/v1/swagger.json - null null
+2026-06-07 09:01:19.784 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7142/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 47.9488ms
+2026-06-07 09:42:57.295 +05:30 [INF] Now listening on: https://localhost:7142
+2026-06-07 09:42:57.350 +05:30 [INF] Now listening on: http://localhost:5085
+2026-06-07 09:42:57.565 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-07 09:42:57.565 +05:30 [INF] Hosting environment: Development
+2026-06-07 09:42:57.565 +05:30 [INF] Content root path: D:\Assessments_2026\PharmacyInventory\pharmacy

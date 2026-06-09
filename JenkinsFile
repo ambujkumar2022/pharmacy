@@ -22,13 +22,13 @@ pipeline {
             }
         }
 
-        stage('Frontend Build') {
+       /* stage('Frontend Build') {
             steps {
               dir('pharmacy-ui'){
                 bat 'npm install'
                 bat 'npm run build'
                 }
-            }
+            }*/
         }
     }
 

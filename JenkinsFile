@@ -30,77 +30,56 @@ pipeline {
                 }
             }
         }*/
-    }
 
-    //SonarBegin
-stage('Sonar Begin') {
+        stage('Sonar Begin') {
+            steps {
+                bat '''dotnet sonarscanner begin /k:"pharmacy" /d:sonar.host.url="http://localhost:9000" /d:sonar.token="%SONAR_TOKEN%" /d:sonar.javascript.lcov.reportPaths="pharmacy-ui/coverage/lcov.info" '''
+                }
+         }
 
-    steps {
+        stage('Build Backend') {
+            steps {
+                bat 'dotnet build'
+            }
+        }
 
-        bat '''
-        dotnet sonarscanner begin ^
-        /k:"pharmacy" ^
-        /d:sonar.host.url="http://localhost:9000" ^
-        /d:sonar.token="%SONAR_TOKEN%" ^
-        /d:sonar.javascript.lcov.reportPaths="pharmacy-ui/coverage/lcov.info"
-        '''
-    }
-}
+        stage('Backend Tests') {
+            steps {
+                bat 'dotnet test --collect:"XPlat Code Coverage"'
+            }
+        }
 
-//BuildBackend
-stage('Build Backend') {
-    steps {
-        bat 'dotnet build'
-    }
-}
+        stage('Frontend Build') {
+            steps {
 
-//TestBackend
-stage('Backend Tests') {
-    steps {
-        bat 'dotnet test --collect:"XPlat Code Coverage"'
-    }
-}
+                dir('pharmacy-ui') {
 
+                    bat 'npm install'
 
-//BuildFrontend
-stage('Frontend Build') {
-    steps {
+                    bat 'npm run build'
+                }
+            }
+        }
 
-        dir('pharmacy-ui') {
+        stage('Frontend Tests') {
 
-            bat 'npm install'
+            steps {
 
-            bat 'npm run build'
+                dir('pharmacy-ui') {
+
+                    bat 'npm test -- --coverage --watchAll=false'
+                }
+            }
+        }
+
+        stage('Sonar End') {
+
+            steps {
+
+                bat '''dotnet sonarscanner end /d:sonar.token="%SONAR_TOKEN%"'''
+            }
         }
     }
-}
-
-
-//TestFrontEnd
-stage('Frontend Tests') {
-
-    steps {
-
-        dir('pharmacy-ui') {
-
-            bat 'npm test -- --coverage --watchAll=false'
-        }
-    }
-}
-
-
-//SonarEnd
-stage('Sonar End') {
-
-    steps {
-
-        bat '''
-        dotnet sonarscanner end ^
-        /d:sonar.token="%SONAR_TOKEN%"
-        '''
-    }
-}
-
 
     post {
         success {

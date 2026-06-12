@@ -32,6 +32,76 @@ pipeline {
         }*/
     }
 
+    //SonarBegin
+stage('Sonar Begin') {
+
+    steps {
+
+        bat '''
+        dotnet sonarscanner begin ^
+        /k:"pharmacy" ^
+        /d:sonar.host.url="http://localhost:9000" ^
+        /d:sonar.token="%SONAR_TOKEN%" ^
+        /d:sonar.javascript.lcov.reportPaths="pharmacy-ui/coverage/lcov.info"
+        '''
+    }
+}
+
+//BuildBackend
+stage('Build Backend') {
+    steps {
+        bat 'dotnet build'
+    }
+}
+
+//TestBackend
+stage('Backend Tests') {
+    steps {
+        bat 'dotnet test --collect:"XPlat Code Coverage"'
+    }
+}
+
+
+//BuildFrontend
+stage('Frontend Build') {
+    steps {
+
+        dir('pharmacy-ui') {
+
+            bat 'npm install'
+
+            bat 'npm run build'
+        }
+    }
+}
+
+
+//TestFrontEnd
+stage('Frontend Tests') {
+
+    steps {
+
+        dir('pharmacy-ui') {
+
+            bat 'npm test -- --coverage --watchAll=false'
+        }
+    }
+}
+
+
+//SonarEnd
+stage('Sonar End') {
+
+    steps {
+
+        bat '''
+        dotnet sonarscanner end ^
+        /d:sonar.token="%SONAR_TOKEN%"
+        '''
+    }
+}
+
+
     post {
         success {
             echo 'Build Successful'

@@ -21,7 +21,8 @@ pipeline {
                 bat 'npm run build'
                 }
             }
-        }*/
+        }
+         /d:sonar.javascript.lcov.reportPaths="pharmacy-ui/coverage/lcov.info"*/
 
        stage('Debug Sonar Token') {
             steps {
@@ -31,7 +32,7 @@ pipeline {
 
         stage('Sonar Begin') {
             steps {
-                bat '''C:\Users\ambuj\.dotnet\tools\dotnet-sonarscanner.exe begin /k:"pharmacy" /d:sonar.host.url="http://localhost:9000" /d:sonar.token="%SONAR_TOKEN%" /d:sonar.javascript.lcov.reportPaths="pharmacy-ui/coverage/lcov.info" '''
+                bat '''C:\Users\ambuj\.dotnet\tools\dotnet-sonarscanner.exe begin /k:"pharmacy" /d:sonar.host.url="http://localhost:9000" /d:sonar.token="%SONAR_TOKEN%" '''
                 }
          }
 
@@ -73,7 +74,7 @@ pipeline {
 
             steps {
 
-                bat '''dotnet sonarscanner end /d:sonar.token="%SONAR_TOKEN%"'''
+                bat '''C:\Users\ambuj\.dotnet\tools\dotnet-sonarscanner.exe end /d:sonar.token="%SONAR_TOKEN%"'''
             }
         }
     }

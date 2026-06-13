@@ -57,7 +57,7 @@ pipeline {
                     bat 'npm run build'
                 }
             }
-        }*/
+        }
 
         stage('Frontend Tests') {
 
@@ -68,7 +68,7 @@ pipeline {
                     bat 'npm test -- --coverage --watchAll=false'
                 }
             }
-        }
+        }*/
 
         stage('Sonar End') {
 

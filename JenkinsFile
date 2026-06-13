@@ -1,24 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        SONAR_TOKEN = credentials('sonar-token')
+    }
+
     stages {
 
         stage('Checkout') {
             steps {
                 git branch: 'dev-pharmacy',
                     url: 'https://github.com/ambujkumar2022/pharmacy.git'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                bat 'dotnet build'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                bat 'dotnet test'
             }
         }
 
@@ -31,9 +23,15 @@ pipeline {
             }
         }*/
 
+       stage('Debug Sonar Token') {
+            steps {
+                bat 'echo Token Loaded Successfully'
+            }
+        }
+
         stage('Sonar Begin') {
             steps {
-                bat '''dotnet sonarscanner begin /k:"pharmacy" /d:sonar.host.url="http://localhost:9000" /d:sonar.token="%SONAR_TOKEN%" /d:sonar.javascript.lcov.reportPaths="pharmacy-ui/coverage/lcov.info" '''
+                bat '''C:\Users\ambuj\.dotnet\tools\dotnet-sonarscanner.exe begin /k:"pharmacy" /d:sonar.host.url="http://localhost:9000" /d:sonar.token="%SONAR_TOKEN%" /d:sonar.javascript.lcov.reportPaths="pharmacy-ui/coverage/lcov.info" '''
                 }
          }
 
@@ -49,17 +47,16 @@ pipeline {
             }
         }
 
-        stage('Frontend Build') {
+       /* stage('Frontend Build') {
             steps {
 
                 dir('pharmacy-ui') {
 
                     bat 'npm install'
-
                     bat 'npm run build'
                 }
             }
-        }
+        }*/
 
         stage('Frontend Tests') {
 

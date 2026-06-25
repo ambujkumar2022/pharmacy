@@ -1,0 +1,26 @@
+# image: asia-south1-docker.pkg.dev/project-2936103a-2f95-428b-b48/pharmacy-repo/pharmacy-api:v1
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: pharmacy-api
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: pharmacy-api
+
+  template:
+    metadata:
+      labels:
+        app: pharmacy-api
+
+    spec:
+      containers:
+      - name: pharmacy-api
+        image: asia-south1-docker.pkg.dev/project-2936103a-2f95-428b-b48/pharmacy-repo/pharmacy-api:v1
+
+        ports:
+        - containerPort: 8080
